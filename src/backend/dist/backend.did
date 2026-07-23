@@ -1,0 +1,200 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type TransporterStatus = 
+ variant {
+   pending;
+   rejected;
+   validated;
+ };
+type TransporterProfile = 
+ record {
+   "principal": principal;
+   registeredAt: Timestamp;
+   rejectedAt: opt Timestamp;
+   status: TransporterStatus;
+   validatedAt: opt Timestamp;
+ };
+type Timestamp = int;
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type ParcelUpdate = 
+ record {
+   additionalInfo: opt text;
+   clientName: opt text;
+   clientPhone: opt text;
+   destinationAddress: opt text;
+   parcelCount: opt nat;
+   parcelType: opt text;
+   senderName: opt text;
+   status: opt ParcelStatus;
+   trackingCode: opt text;
+ };
+type ParcelStatus = 
+ variant {
+   delivered;
+   inTransit;
+   pending;
+ };
+type ParcelInput = 
+ record {
+   additionalInfo: text;
+   clientName: text;
+   clientPhone: text;
+   destinationAddress: text;
+   parcelCount: nat;
+   parcelType: text;
+   senderName: text;
+   trackingCode: text;
+ };
+type ParcelId = nat;
+type ParcelFilter = 
+ record {
+   clientNameQuery: opt text;
+   fromDate: opt int;
+   status: opt ParcelStatus;
+   toDate: opt int;
+ };
+type Parcel = 
+ record {
+   additionalInfo: text;
+   clientName: text;
+   clientPhone: text;
+   createdAt: int;
+   destinationAddress: text;
+   id: ParcelId;
+   owner: principal;
+   parcelCount: nat;
+   parcelType: text;
+   senderName: text;
+   status: ParcelStatus;
+   trackingCode: text;
+   updatedAt: int;
+ };
+type NewsPageInput = 
+ record {
+   description: text;
+   title: text;
+   whatsappLink: text;
+ };
+type NewsPage = 
+ record {
+   description: text;
+   links: vec NewsLink;
+   title: text;
+   whatsappLink: text;
+ };
+type NewsLinkInput = 
+ record {
+   linkLabel: text;
+   url: text;
+ };
+type NewsLink = 
+ record {
+   id: nat;
+   linkLabel: text;
+   url: text;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type DashboardStats = 
+ record {
+   byTransporteur: vec record {
+                         principal;
+                         nat;
+                       };
+   deliveredCount: nat;
+   inTransitCount: nat;
+   pendingCount: nat;
+   totalParcels: nat;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+service : {
+  __accessControlState: () -> (reserved) query;
+  __newsState: () -> (reserved) query;
+  __parcelNextId: () -> (reserved) query;
+  __parcels: (io: opt nat, count: opt nat) -> (vec Parcel) query;
+  __transporters: (ko: opt principal, count: opt nat) ->
+   (vec record {
+          principal;
+          TransporterProfile;
+        }) query;
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  addNewsLink: (input: NewsLinkInput) -> (NewsLink);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  deleteAnyParcel: (id: ParcelId) -> (opt Parcel);
+  deleteMyParcel: (id: ParcelId) -> (opt Parcel);
+  deleteNewsLink: (id: nat) -> (bool);
+  execute: (qJson: text) -> (Result) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getDashboardStats: () -> (DashboardStats) query;
+  getMyParcel: (id: ParcelId) -> (opt Parcel) query;
+  getMyTransporterProfile: () -> (opt TransporterProfile) query;
+  getNewsPage: () -> (NewsPage) query;
+  getTransporterProfile: ("principal": principal) ->
+   (opt TransporterProfile) query;
+  isCallerAdmin: () -> (bool) query;
+  isCallerTransporterValidated: () -> (bool) query;
+  listAllParcels: () -> (vec Parcel) query;
+  listMyParcels: () -> (vec Parcel) query;
+  listTransporters: () -> (vec TransporterProfile) query;
+  listTransportersByStatus: (status: TransporterStatus) ->
+   (vec TransporterProfile) query;
+  registerAsTransporter: () -> (TransporterProfile);
+  registerParcel: (input: ParcelInput) -> (ParcelId);
+  rejectTransporter: ("principal": principal) -> (opt TransporterProfile);
+  revokeTransporter: ("principal": principal) -> (opt TransporterProfile);
+  schema: () -> (text) query;
+  searchParcels: (filter: ParcelFilter) -> (vec Parcel) query;
+  updateAnyParcel: (id: ParcelId, update: ParcelUpdate) -> (opt Parcel);
+  updateMyParcel: (id: ParcelId, update: ParcelUpdate) -> (opt Parcel);
+  updateNewsLink: (id: nat, input: NewsLinkInput) -> (opt NewsLink);
+  updateNewsPage: (input: NewsPageInput) -> ();
+  validateTransporter: ("principal": principal) -> (opt TransporterProfile);
+}

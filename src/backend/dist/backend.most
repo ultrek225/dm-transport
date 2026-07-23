@@ -1,0 +1,207 @@
+// Version: 4.0.0
+type AccessControlState__662996504 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__246123559<Principal, UserRole__968116052>
+  };
+type AccessControlState__825338347 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__246123559<Principal, UserRole__33289320>
+  };
+type Data__552063367<K, V> = {var count : Nat__93962160; kvs : [var ?(K, V)]};
+type Internal__455405067<K, V> =
+  {children : [var ?Node__279997185<K, V>]; data : Data__552063367<K, V>};
+type Leaf__114713147<K, V> = {data : Data__552063367<K, V>};
+type List__716101829<T> =
+  {
+    var blockIndex : Nat__93962160;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__93962160
+  };
+type List__852723865<T> = List__716101829<T>;
+type Map__190625089<K, V> = Map__719753394<K, V>;
+type Map__246123559<K, V> = Map__190625089<K, V>;
+type Map__719753394<K, V> =
+  {var root : Node__279997185<K, V>; var size : Nat__93962160};
+type Nat__920180692 = Nat;
+type Nat__93962160 = Nat__920180692;
+type NewActor__544122477 =
+  {
+    var accessControlState : AccessControlState__825338347;
+    var newsState : NewsState__70632171;
+    var parcelNextId : NextId__1054322291;
+    var parcels : List__852723865<NewParcel__395272781>;
+    var transporters :
+      Map__246123559<Principal, TransporterProfile__1059132129>
+  };
+type NewActor__826997258 =
+  {
+    var accessControlState : AccessControlState__662996504;
+    var newsState : NewsState__740663501;
+    var parcelNextId : NextId__101495112;
+    var parcels : List__852723865<Parcel__412156597>;
+    var transporters :
+      Map__246123559<Principal, TransporterProfile__737273133>
+  };
+type NewParcel__395272781 =
+  {
+    additionalInfo : Text;
+    clientName : Text;
+    clientPhone : Text;
+    createdAt : Int;
+    destinationAddress : Text;
+    id : Nat;
+    owner : Principal;
+    parcelCount : Nat;
+    parcelType : Text;
+    senderName : Text;
+    status : ParcelStatus__884174017;
+    trackingCode : Text;
+    updatedAt : Int
+  };
+type NewsLink__491564263 = {id : Nat; linkLabel : Text; url : Text};
+type NewsLink__878915092 = {id : Nat; linkLabel : Text; url : Text};
+type NewsLink__883785959 = {id : Nat; linkLabel : Text; url : Text};
+type NewsState__70632171 =
+  {
+    var description : Text;
+    var links : List__852723865<NewsLink__878915092>;
+    var nextLinkId : Nat;
+    var title : Text;
+    var whatsappLink : Text
+  };
+type NewsState__740663501 =
+  {
+    var description : Text;
+    var links : List__852723865<NewsLink__491564263>;
+    var nextLinkId : Nat;
+    var title : Text;
+    var whatsappLink : Text
+  };
+type NextId__101495112 = {var next : Nat};
+type NextId__1054322291 = {var next : Nat};
+type Node__279997185<K, V> =
+  {#internal : Internal__455405067<K, V>; #leaf : Leaf__114713147<K, V>};
+type OldActor__331980100 =
+  {
+    var accessControlState : AccessControlState__825338347;
+    var newsState : NewsState__70632171;
+    var parcelNextId : NextId__1054322291;
+    var parcels : List__852723865<OldParcel__73763471>;
+    var transporters :
+      Map__246123559<Principal, TransporterProfile__1059132129>
+  };
+type OldActor__820217129 = {};
+type OldParcel__73763471 =
+  {
+    additionalInfo : Text;
+    clientName : Text;
+    clientPhone : Text;
+    createdAt : Int;
+    destinationAddress : Text;
+    id : Nat;
+    owner : Principal;
+    parcelCount : Nat;
+    parcelType : Text;
+    status : ParcelStatus__884174017;
+    updatedAt : Int
+  };
+type ParcelId__678736916 = Nat;
+type ParcelStatus__1012806595 = {#delivered; #inTransit; #pending};
+type ParcelStatus__295928794 = {#delivered; #inTransit; #pending};
+type ParcelStatus__884174017 = {#delivered; #inTransit; #pending};
+type Parcel__254913955 =
+  {
+    additionalInfo : Text;
+    clientName : Text;
+    clientPhone : Text;
+    createdAt : Int;
+    destinationAddress : Text;
+    id : ParcelId__678736916;
+    owner : Principal;
+    parcelCount : Nat;
+    parcelType : Text;
+    senderName : Text;
+    status : ParcelStatus__295928794;
+    trackingCode : Text;
+    updatedAt : Int
+  };
+type Parcel__412156597 =
+  {
+    additionalInfo : Text;
+    clientName : Text;
+    clientPhone : Text;
+    createdAt : Int;
+    destinationAddress : Text;
+    id : Nat;
+    owner : Principal;
+    parcelCount : Nat;
+    parcelType : Text;
+    status : ParcelStatus__1012806595;
+    updatedAt : Int
+  };
+type Parcel__855008539 = Parcel__254913955;
+type Timestamp__301639476 = Int;
+type Timestamp__778030842 = Timestamp__301639476;
+type TransporterProfile__1059132129 =
+  {
+    principal : Principal;
+    registeredAt : Int;
+    rejectedAt : ?Int;
+    status : TransporterStatus__611555413;
+    validatedAt : ?Int
+  };
+type TransporterProfile__714225286 =
+  {
+    principal : Principal;
+    registeredAt : Timestamp__778030842;
+    rejectedAt : ?Timestamp__778030842;
+    status : TransporterStatus__724263556;
+    validatedAt : ?Timestamp__778030842
+  };
+type TransporterProfile__737273133 =
+  {
+    principal : Principal;
+    registeredAt : Int;
+    rejectedAt : ?Int;
+    status : TransporterStatus__411273006;
+    validatedAt : ?Int
+  };
+type TransporterStatus__411273006 = {#pending; #rejected; #validated};
+type TransporterStatus__611555413 = {#pending; #rejected; #validated};
+type TransporterStatus__724263556 = {#pending; #rejected; #validated};
+type UserRole__33289320 = {#admin; #guest; #user};
+type UserRole__686137147 = {#admin; #guest; #user};
+type UserRole__968116052 = {#admin; #guest; #user};
+{
+  "20260702_054600" : (old : OldActor__820217129) -> NewActor__826997258;
+  "20260703_000000" : (old : OldActor__331980100) -> NewActor__544122477
+}
+actor  {
+  stable var accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__246123559<Principal, UserRole__686137147>
+    };
+  stable var newsState :
+    {
+      var description : Text;
+      var links : List__852723865<NewsLink__883785959>;
+      var nextLinkId : Nat;
+      var title : Text;
+      var whatsappLink : Text
+    };
+  stable var parcelNextId : {var next : Nat};
+  stable var parcels :
+    {
+      var blockIndex : Nat__93962160;
+      var blocks : [var [var ?Parcel__855008539]];
+      var elementIndex : Nat__93962160
+    };
+  stable var transporters :
+    {
+      var root : Node__279997185<Principal, TransporterProfile__714225286>;
+      var size : Nat__93962160
+    }
+};

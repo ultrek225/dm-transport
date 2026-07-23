@@ -1,0 +1,20 @@
+{
+  "overview": "Application de suivi de colis pour DM Transport avec gestion des transporteurs, tableau de bord admin, export CSV et codes uniques de colis.",
+  "features": [
+    "Suivi des colis avec statuts (en attente, en cours, livré)",
+    "Gestion des transporteurs par groupes avec validation admin",
+    "Code unique généré par colis basé sur le nom de l'expéditeur",
+    "Tableau de bord admin avec statistiques (total, par statut, par transporteur)",
+    "Export CSV de tous les colis",
+    "Page actualités publique modifiable par l'admin"
+  ],
+  "category": "productivity",
+  "tags": [
+    "logistics",
+    "parcel-tracking",
+    "admin-dashboard",
+    "csv-export",
+    "french"
+  ],
+  "last_updated": "2026-07-03T23:13:57.638Z"
+}
